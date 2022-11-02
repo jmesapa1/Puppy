@@ -1,0 +1,75 @@
+<div mat-dialog-title style="text-align: center;margin-bottom: 5px;">
+  <img src="./assets/img/mh_transparente.png" style="width: 100%;max-width: 150px;">
+  </div>
+  
+<div class="fondo" mat-dialog-content>
+    <div class="row">
+    
+  <div class="card" style="background: transparent;">
+    <div class="card-body"  class="fondo">
+  
+      <div class="container">
+        <div class="row">
+          <div class="col-6 col-xs-6 col-sm-6 col-lg-6 col-xl-6 col-md-6">
+  
+            <ul class="list-unstyled float-end center">
+              <li><b>Inversión</b></li>
+              <li><b>Valor:</b> ${{20000000 | number}}</li>
+              <li><b>Tipo:</b> A Riesgo</li>
+              <li><b>Porcentaje:</b>19%</li>
+              <li><b>Plazo:</b> 7 Meses</li>
+
+            </ul>
+          </div>
+        </div>
+  
+  
+      
+  
+       
+  
+        <div class="row mx-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Samsung TV</td>
+                <td><i class="fas fa-dollar-sign"></i> 500,00</td>
+              </tr>
+              <tr>
+                <td>JBL Speaker</td>
+                <td><i class="fas fa-dollar-sign"></i> 300,00</td>
+              </tr>
+              <tr>
+                <td>Macbook Air</td>
+                <td><i class="fas fa-dollar-sign"></i> 1000,00</td>
+              </tr>
+              <tr>
+                <td>Iphone 11 PRO</td>
+                <td><i class="fas fa-dollar-sign"></i> 5000,00</td>
+              </tr>
+            </tbody>
+          </table>
+  
+        </div>
+        
+      </div>
+  
+  
+  
+    </div>
+    <div class="card-footer"></div>
+  </div>
+  
+</div>
+</div>
+<div class="row" style="margin-top: 10px;">
+  <button class="btn btn-primary" (click)="cancelar(false)" style="margin-left: auto;">Cerrar</button>
+  <button class="btn btn-primary" >Descargar PDF</button>
+
+</div>

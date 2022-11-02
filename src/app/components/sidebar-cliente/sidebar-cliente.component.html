@@ -1,0 +1,16 @@
+
+<div class="logo" data-color="blue">
+    <a class="simple-text logo-normal" style="    text-align: center;">
+        <img src="./assets/img/mh_transparente.png" style="width: 70%">
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <ul class="nav">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+            <a [routerLink]="[menuItem.path]" *ngIf="menuItem.mostrar">
+                <i class="now-ui-icons {{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul>
+</div>

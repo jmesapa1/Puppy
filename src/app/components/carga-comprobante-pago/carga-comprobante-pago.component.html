@@ -1,0 +1,96 @@
+<h1 mat-dialog-title>Cargar comprobante de pago</h1>
+<div mat-dialog-content>
+  <p>
+    <b>Fecha de pago: </b> {{this.detallePago.fecha}}
+  </p>
+  <p>
+    <b>Valor: </b> ${{this.detallePago.valor_pago | number}}
+  </p>
+  <p>
+    <b>Estado: </b> {{detallePago.pagado?'Pagado':'No pagado'}}
+  </p>
+  <br>
+  <div class="row">
+    <div class="col-md-12 pr-1">
+
+    <div class="form-group">
+      <p><b>Descripcion de comprobante</b></p>
+
+      <textarea type="tel" [disabled]="archivo!=undefined && dataAux.editar" [(ngModel)]="descripcion" class="form-control"
+        placeholder="Ingrese descripción"></textarea>
+
+    </div>
+    </div>
+  </div>
+ <div class="row">
+    <div class="col-md-12 pr-1">
+      <div class="form-group">
+        <p><b>Comprobante de pago</b></p>
+      </div>
+     
+      <div *ngIf="uploader.queue.length===0 && !this.archivoCargado" ng2FileDrop
+        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (onFileDrop)="fileDrop($event)"
+        (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well my-drop-zone"
+        style="height: 20vh;margin: auto;">
+        <div>
+          <div style="  margin: 0;
+position: absolute;
+top: 56%; 
+left: 50%;
+-ms-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);">
+            <button (click)="fileInput.click()" class="btn btn-sm btn-primary">Cargar
+              archivo</button>
+            <span
+              style="visibility: hidden; position: absolute; overflow: hidden; width: 0px; height:0px;border:none;margin:0; padding:0">
+              <input type="file" (onFileSelected)="file($event,fileInput)" [(ngModel)]="val" #fileInput ng2FileSelect
+                [uploader]="uploader" single />
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <table class="table" *ngIf="uploader.queue.length!=0 && this.archivoCargado && this.data.opcion === 'crear'">
+        <thead>
+          <tr>
+            <th width="50%">Nombre</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of uploader.queue;">
+            <td><strong>{{ item?.file?.name }}</strong></td>
+
+
+            <td nowrap>
+
+              <button type="button" class="btn btn-danger btn-xs" (click)="item.remove();eliminar()">
+                <span class="glyphicon glyphicon-trash"></span> Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf=" this.archivoCargado">
+        <div class="row">
+          <img [src]="archivo" style="margin: auto;    width: 40%;">
+        </div>
+        <div class="row" style="margin-top: 5px;">
+          <button type="button" class="btn btn-danger btn-xs" style="margin: auto;" (click)="eliminar(0)">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar comprobante
+          </button>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+  <button class="btn btn-primary" (click)="cancelar(false)" style="margin-left: auto;">Cerrar</button>
+  <button class="btn btn-primary" (click)="enviarComprobante()" *ngIf="archivo!=undefined && !dataAux.editar ">Agregar
+    comprobante</button>
+
+</div>

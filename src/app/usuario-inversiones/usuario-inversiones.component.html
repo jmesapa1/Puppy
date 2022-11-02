@@ -1,0 +1,123 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <div class="row" style="padding-left: 10px;padding-right:10px">
+          <div>
+            <h4 style="margin-top: 0px;
+            margin-bottom: 0px;">Listado de inversiones,  <a class="description">
+              {{nombre}}, C.C {{identificacion}} <button (click)="enviarMensaje()" style="    margin-top: 0px;"
+                class="btn btn-neutral btn-icon btn-round btn-lg">
+                <i class="fab fa-whatsapp" style="    font-size: 35px;  "></i>
+              </button>
+
+            </a></h4>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h5 class="title">Inversiones
+                <h5 class="card-category">Total invertido: <b>${{obtenerValorGeneral() | number}} </b></h5>
+              </h5>    
+            </div>
+            <div class="col">
+              <button 
+              class="btn btn-sm btn-primary" (click)="crearInversion()">Crear inversión</button>
+            </div>
+          </div>
+       
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-4" *ngFor="let inversion of data.inversiones">
+              <div class="card card-chart" [class.riesgo]="inversion.data.tipo==='A Riesgo'">
+                <div class="card-header">
+                  <h5 class="card-category">Fecha creación: {{inversion.data.fecha}}</h5>
+                  <h4 class="card-title">Inversión: ${{inversion.data.valor | number}}</h4>
+                  <h4 class="card-title">Tipo: {{inversion.data.tipo}}</h4>
+
+                  <h5 class="card-title">Porcentaje: {{inversion.data.porcentaje}}%</h5>
+
+                  <div ngbDropdown>
+                    <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
+                      ngbDropdownToggle>
+                      <i class="now-ui-icons loader_gear"></i>
+                    </button>
+                    <div ngbDropdownMenu class="dropdown-menu-right">
+                      <a *ngIf="inversion.data.estado!='pendiente'" (click)="editarEstado(inversion,'pendiente')"
+                        class="dropdown-item">Pendiente de pago</a>
+                      <a *ngIf="inversion.data.estado!='cancelado'" (click)="editarEstado(inversion,'cancelado')"
+                        class="dropdown-item text-danger">Cancelado</a>
+
+                    </div>
+                  </div>
+                  <button *ngIf="inversion.data.estado!='pendiente' && inversion.data.estado!='cancelado'"
+                    (click)="verPagos(inversion)" class="btn btn-sm btn-primary">Ver pagos</button>
+                  <button *ngIf="inversion.data.estado==='pendiente'" (click)="verSimulacion(inversion)"
+                    class="btn btn-sm btn-primary">Ver simulación</button>
+                    <button (click)="verResumen(inversion)"
+                    class="btn btn-sm btn-primary">Ver resumen</button>
+                  <button (click)="editarInversion(inversion)" *ngIf="inversion.data.estado!='cancelado'"
+                    class="btn btn-sm btn-primary">Editar</button>
+
+                </div>
+                <div class="card-body">
+
+                </div>
+                <div class="card-footer">
+                  <b>
+                    <div class="stats" [class.verde]="inversion.data.estado==='activo'"
+                      [class.text-warning]="inversion.data.estado==='pendiente'"
+                      [class.rojo]="inversion.data.estado==='finalizado'">
+                      <i class="now-ui-icons ui-1_check" style="color: green !important"
+                        *ngIf="inversion.data.estado==='activo'"></i>
+                      <i class="now-ui-icons ui-1_simple-remove" style="color: red !important"
+                        *ngIf="inversion.data.estado==='finalizado'"></i>
+                      <i class="now-ui-icons ui-1_simple-remove" style="color: red !important"
+                        *ngIf="inversion.data.estado==='cancelado'"></i>
+
+                      <i class="now-ui-icons loader_refresh" style="color: gold !important"
+                        *ngIf="inversion.data.estado==='pendiente'"></i>
+
+                      {{inversion.data.estado }}
+                    </div>
+                  </b>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="card card-chart" (click)="crearInversion()">
+                <div class="card-header">
+                  <h4 class="card-title">Crear inversión</h4>
+
+                </div>
+                <div class="card-body">
+                  <div class="chart-area row">
+                    <img src="assets/img/cripto.png" style="width:30%;margin:auto">
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="now-ui-icons business_money-coins "></i> Minínmo $5.000.000 COP
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

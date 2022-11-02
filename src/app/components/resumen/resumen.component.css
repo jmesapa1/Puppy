@@ -1,0 +1,54 @@
+
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; } 
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+ mat-dialog-container{
+    background: url(./../../../assets/img/fondo_modal.png) !important;
+  }
+.fondo{
+  background: url(./../../../assets/img/fondo_modal.png) !important;
+  background-image:url(./../../../assets/img/fondo_modal.png) !important;
+  background-color: #cccccc; /* Used if the image is unavailable */
+  height: 500px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+  .mat-dialog-container{
+    background: url(./../../../assets/img/fondo_modal.png) !important;
+
+  }
+
+  .container{
+    background: url(./../../../assets/img/fondo_modal.png) !important;
+    background-image:url(./../../../assets/img/fondo_modal.png) !important;
+    background-color: #cccccc; /* Used if the image is unavailable */
+    height: 500px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+  }
+
+
+  .center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    width: 100%;
+    }
+    .center2 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      padding: 10px;
+      width: 100%;
+      }

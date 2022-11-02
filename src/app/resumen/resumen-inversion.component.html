@@ -1,0 +1,87 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  
+  <div class="row">
+   
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+        <button class="btn btn-primary" style="margin-left: auto;float: right;"  (click)="exportar()">Generar PDF</button>
+ 
+      </div> 
+      </div>
+      <div class="card" id="invoice" #invoice [class.archivoGrande]="exportando"  >
+        <div class="image">
+          <div class="card-body"  style="padding: 5%">
+            <div class="row">
+              <img src="./assets/img/mh_transparente.png" style="width: 30%;max-width: 150px;">
+
+            </div>
+            <h5 style="text-align:center ;">FONDO DE INVERSIONES MH</h5>
+            <div class="row">
+              <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+                <p style="text-align:center ;">Valor:<b> ${{data.detalleInversion.data.valor | number}}</b></p>
+
+              </div>
+             
+              <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+
+              <p style="text-align:center ;">Tipo:<b> {{data.detalleInversion.data.tipo}}</b></p>
+              </div>
+              <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+
+                <p style="text-align:center ;">Porcentaje:<b> {{data.detalleInversion.data.porcentaje}}%</b></p>
+                </div>
+
+                
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+                  <p style="text-align:center ;">Cliente:<b> {{data.usuario.nombre}}</b></p>
+  
+                </div>
+               
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+  
+                <p style="text-align:center ;">Identificacion:<b> {{data.usuario.identificacion}}</b></p>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+  
+                  <p style="text-align:center ;">Número de cuenta:<b> {{data.usuario.numero_cuenta}}</b></p>
+                  </div>
+            </div>
+            <h5 style="text-align:center ;">Plan de pagos</h5>
+
+            <table class="table">
+              <thead>
+                <tr >
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold;"><b>No.</b></th>
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold;"><b>Fecha de pago</b></th>
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold"><b>Porcentaje</b></th>
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold"><b>Valor de pago</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pago of pagos;let i=index">
+                  <th >{{i+1}}</th>
+                  <td>{{pago?.fecha}}</td>
+                  <td>{{pago.porcentaje}}%</td>
+                  <td>${{pago.valor_pago | number}}</td>
+                </tr>
+                
+              </tbody>
+            </table>
+            
+           
+          </div>
+          <div class="card-footer" style="margin-top: 80%;">
+           
+          </div>
+        </div>
+       
+       
+      </div>
+      
+    </div>
+
+  </div>
+</div>

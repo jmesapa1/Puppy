@@ -1,0 +1,84 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row" style="padding-left: 10px;padding-right:10px">
+            <div class="col">
+              <h4 class="card-title">Listado de inversionistas</h4>
+            </div>
+            <button class="btn btn-primary btn-block" routerLink="/detalle-usuario"
+              style="margin-left: auto;max-width: 250px;">Crear inversionista</button>
+
+
+          </div>
+        </div>
+        <div class="card-body">
+        
+          <div class="form-group">
+            <label>Buscar</label>
+            <input  class="form-control" (keyup)="applyFilter($event)" #input>
+          </div>
+            <table mat-table [dataSource]="usuarios" matSort class="table">
+              <ng-container matColumnDef="nombre">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell data-label='Nombre' [class.text-danger]="validaInversionista(row)" *matCellDef="let row"> {{row.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="identificacion">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Identificación </th>
+                <td mat-cell  data-label='Identificación'  [class.text-danger]="validaInversionista(row)" *matCellDef="let row"> {{row.identificacion}} </td>
+              </ng-container>
+              <ng-container matColumnDef="numero_cuenta">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> N° de cuenta </th>
+                <td mat-cell data-label='N° de cuenta'  [class.text-danger]="validaInversionista(row)" *matCellDef="let row"> {{row.numero_cuenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="banco">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Banco </th>
+                <td mat-cell data-label='Banco'  [class.text-danger]="validaInversionista(row)"  *matCellDef="let row"> {{row.banco}} </td>
+              </ng-container>
+              <ng-container matColumnDef="celular">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Celular </th>
+                <td mat-cell data-label='Celular'  [class.text-danger]="validaInversionista(row)" *matCellDef="let row"> {{row.celular}} </td>
+              </ng-container>
+             
+              <ng-container matColumnDef="whatsapp">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Whatsapp </th>
+                <td mat-cell data-label='Dirección'  [class.text-danger]="validaInversionista(row)" *matCellDef="let row"> {{row.whatsapp}} </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="estado">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                <td mat-cell data-label='Estado'  [class.text-danger]="validaInversionista(row)" *matCellDef="let row"> {{row.estado?'Activo':'Inactivo'}} </td>
+              </ng-container>
+              <ng-container matColumnDef="inversiones">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Inversiones </th>
+                <td mat-cell data-label='Inversiones' *matCellDef="let row"> 
+                  
+                  <button  (click)=" verInversiones(row)" style="font-size: 9px !important;" class="btn btn-secondary btn-block">{{row?.inversiones?.length!=0?row?.inversiones?.length+' inversiones':'Crear inversión'}}</button>
+                   
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="opciones">
+                <th class=" text-primary" mat-header-cell *matHeaderCellDef mat-sort-header> Opciones </th>
+                <td mat-cell *matCellDef="let row"><button  style="font-size: 9px !important;" (click)=" editarInversionista(row)" class="btn btn-primary btn-block">Editar</button> </td>
+              </ng-container>
+
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No hay resultados de busqueda "{{input.value}}"</td>
+              </tr>
+
+            </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

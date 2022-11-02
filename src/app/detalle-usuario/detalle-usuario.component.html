@@ -1,0 +1,135 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/mh.png" alt="..." style="position: relative;
+          bottom: 18vh;">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a >
+              <img class="avatar border-gray" src="../assets/img/user.png" alt="...">
+              <h5 class="title">{{nombre}}</h5>
+            </a>
+            <p class="description">
+              C.C {{identificacion}}
+            </p>
+          </div>
+          <p class="description text-center">
+            Descripción de usuario
+          </p>
+        </div>
+        <hr>
+        <div class="button-container">
+          <button (click)="enviarMensaje()" class="btn btn-neutral btn-icon btn-round btn-lg">
+            <i class="fab fa-whatsapp" style="    font-size: 35px;  "></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title" *ngIf="opcion==='crear'">Crear usuario</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formulario">
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Nombre *</label>
+                  <input type="text" [(ngModel)]="nombre" formControlName="nombre" class="form-control"
+                    placeholder="Ingrese nombre">
+                </div>
+              </div>
+              <div class="col-md-6 px-1">
+                <div class="form-group">
+                  <label>Identificación *</label>
+                  <input type="tel" numbersOnly [(ngModel)]="identificacion" formControlName="identificacion"
+                    class="form-control" placeholder="Ingrese Identificación">
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-3 pr-1">
+                <div class="form-group">
+                  <label>Banco *</label>
+                  <select formControlName="banco" type="text" class="form-control">
+                    <option value="" selected disabled>Seleccione una opción</option>
+
+                    <option value="bancolombia">Bancolombia</option>
+                    <option value="davivienda">Davivienda</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 pl-1">
+                <div class="form-group">
+                  <label>Tipo de cuenta *</label>
+                  <select formControlName="tipo_cuenta" type="text" class="form-control">
+                    <option value="" selected disabled>Seleccione una opción</option>
+
+                    <option value="ahorros">
+                      Ahorros
+                    </option>
+                    <option value="corriente">
+                      Corriente
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cuenta">Número de cuenta *</label>
+                  <input formControlName="numero_cuenta" numbersOnly name="cuenta" id="cuenta" type="tel"
+                    class="form-control" placeholder="Ingrese número de cuenta">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Celular *</label>
+                  <input numbersOnly formControlName="celular" type="text" class="form-control"
+                    placeholder="Ingrese celular">
+                </div>
+              </div>
+              <div class="col-md-6 ">
+                <div class="form-group">
+                  <label>Whatsapp *</label>
+                  <input numbersOnly type="text" formControlName="whatsapp" class="form-control"
+                    placeholder="Ingrese whatsapp">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Correo electronico *</label>
+                  <input type="text" formControlName="correo" class="form-control" placeholder="Ingrese correo">
+                  <div class="valid-feedback" *ngIf="formulario.controls.correo.invalid">
+                    Campo requerido o Formato inválido
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-primary" style="margin-left: auto;float: right;" *ngIf="opcion==='crear'"
+                  [disabled]="formulario.invalid" (click)="crearUsuario()">Crear usuario</button>
+                <button class="btn btn-primary" style="margin-left: auto;float: right;" *ngIf="opcion==='editar'"
+                  [disabled]="formulario.invalid" (click)="editarUsuario()">Editar usuario</button>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

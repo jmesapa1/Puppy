@@ -1,0 +1,134 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row" style="padding-left: 10px;padding-right:10px">
+            <div class="col">
+              <div class="row">
+                <h4 class="card-title">Listado de pagos</h4>
+                <form class="example-form" style="margin-left: 20px;min-width: 300px">
+               
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un inversionista</mat-label>
+                    <mat-select [(ngModel)]="buscadorInversion" (ngModelChange)="filtrarCliente()">
+                      <mat-option value="">Todos</mat-option>
+                      <mat-option *ngFor="let inversionista of inversionistas " value={{inversionista.id}}>{{inversionista.nombre}}</mat-option>
+                    </mat-select>
+                   
+                  </mat-form-field>
+                </form>
+
+              </div>
+           
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <button (click)="verDetalle('pagados')" type="button" [disabled]="pagadoBool || pagados.length===0"
+                class="btn btn-success">
+                Pagados <span class="badge badge-success">{{pagados.length}}</span>
+              </button>
+              <button type="button" (click)="verDetalle('pendientes')"
+                [disabled]="pendienteBool || pendiente.length===0" class="btn btn-info">
+                Pendientes de pago <span class="badge badge-info">{{pendiente.length}}</span>
+              </button>
+              <button type="button" [disabled]="todoBool" (click)="verDetalle('todos')" class="btn ">
+                Todos <span class="badge ">{{todos.length}}</span>
+              </button>
+              <button type="button" *ngIf="pendienteBool && cantidadProximo()!=0" (click)="verDetalleProximo()" class="btn btn-warning">
+                Proximos de pago <span class="badge badge-warning">{{cantidadProximo()}}</span>
+              </button>
+              <button type="button" *ngIf="pendienteBool && cantidadVencido()!=0" (click)="verDetalleVencido()" class="btn btn-danger">
+                Pagos vencidos <span class="badge badge-warning">{{verDetalleVencido()}}</span>
+              </button>
+            </div>
+          </div>
+
+          <table mat-table [dataSource]="pagos" class="table">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef>
+                No.
+              </th>
+              <td [class.rojo]="validarPagoVencido(element)" [class.text-warning]="validarPagoProximo(element)" mat-cell
+                *matCellDef="let element;let i=index"> {{i+1}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef>
+                Fecha de pago
+              </th>
+              <td mat-cell [class.rojo]="validarPagoVencido(element)" [class.text-warning]="validarPagoProximo(element)"
+                *matCellDef="let element"> {{element.data.fecha}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef>
+                Inversión
+              </th>
+              <td mat-cell *matCellDef="let element"> <button (click)="verInversion(element)"
+                  class="btn btn-sm btn-primary" style="width: 100%;">Ver inversión</button> </td>
+            </ng-container>
+            <ng-container matColumnDef="porcentaje">
+              <th mat-header-cell *matHeaderCellDef>
+                Porcentaje
+              </th>
+              <td [class.rojo]="validarPagoVencido(element)" mat-cell *matCellDef="let element"
+                [class.text-warning]="validarPagoProximo(element)"> {{element.data.porcentaje | number}}% </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="valor">
+              <th mat-header-cell *matHeaderCellDef>
+                Valor de pago
+              </th>
+              <td [class.rojo]="validarPagoVencido(element)" mat-cell *matCellDef="let element"
+                [class.text-warning]="validarPagoProximo(element)"> ${{element.data.valor_pago | number}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef>
+                Pagado
+              </th>
+              <td [class.verde]="element.data.pagado" [class.rojo]="validarPagoVencido(element)"
+                [class.text-warning]="validarPagoProximo(element)" mat-cell *matCellDef="let element">
+                {{element.data.pagado?'Pagado':'Pendiente pago'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="inversionista">
+              <th mat-header-cell *matHeaderCellDef>
+                Inversionista
+              </th>
+              <td mat-cell *matCellDef="let element"> <button (click)="abrirModalDetalleUsuario(element)"
+                  style="min-width:150px;width: 100%;" class="btn btn-sm btn-primary"
+                  >{{element.inversionista.nombre}}</button> </td>
+            </ng-container>
+            <ng-container matColumnDef="opciones">
+              <th mat-header-cell *matHeaderCellDef>
+                Opciones
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <button (click)="cargarComprobante(element,false)" *ngIf="!element.data.pagado" style="min-width:150px"
+                  class="btn btn-sm btn-primary" style="width: 100%;">Cargar comprobante</button>
+                <button (click)="cargarComprobante(element,true)" *ngIf="element.data.pagado" style="min-width:150px"
+                  class="btn btn-sm btn-primary" style="width: 100%;">Ver comprobante</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

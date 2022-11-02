@@ -1,0 +1,47 @@
+<div class="header bg-gradient-danger py-7 py-lg-8">
+  <div class="container">
+    
+  </div>
+  
+</div>
+<!-- Page content -->
+<div class="container mt--8 pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+      <div class="card bg-info shadow border-0" data-color="blue">
+        <div class="card-body px-lg-5 py-lg-5">
+          <h2 style="color:white" style="text-align:center ;">Iniciar sesión</h2>
+          <form [formGroup]="form" role="form">
+            <div class="form-group mb-3">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="now-ui-icons users_single-02" style="color: white !important;"></i></span>
+                </div>
+                <input class="form-control" formControlName="correo" placeholder="Correo eléctronico" type="email">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="now-ui-icons design_bullet-list-67" style="color: white !important;"></i></span>
+                </div>
+                <input class="form-control" formControlName="clave" placeholder="Clave" type="password">
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary my-4" [disabled]="form.invalid" (click)="iniciarSesion()">Iniciar sesión </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6">
+          <a  (click)="cambiarClave()" class="text-light"><small>Olvide mi clave</small></a>
+        </div>
+        <div class="col-6 text-right">
+        <!--<a (click)="registrarse()"  class="text-light"><small>Crear cuenta</small></a>--> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

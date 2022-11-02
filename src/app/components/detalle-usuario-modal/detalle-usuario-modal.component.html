@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Inversionista</h1>
+<div mat-dialog-content>
+
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-user">
+          <div class="image">
+            <img src="../assets/img/mh.png" alt="..." style="position: relative;
+            bottom: 18vh;">   
+          </div>
+          <div class="card-body">
+            <div class="author">
+              <a >
+                <img class="avatar border-gray" src="../assets/img/user.png" alt="...">
+                <h5 class="title">{{data?.nombre}}</h5>
+              </a>
+              <p class="description">
+                <b>  C.C {{data?.identificacion}}</b>
+              </p>
+              <p>
+                <b>  Banco: {{data?.banco}}</b>
+              </p>
+              <p>
+                <b>  Número de cuenta: {{data?.numero_cuenta}}</b>
+              </p>
+              <p>
+                <b>  Tipo de cuenta: {{data?.tipo_cuenta}}</b>
+              </p>
+            </div>
+           
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Comprobante de pago</h1>
+<div mat-dialog-content>
+  <p>
+    <b>Fecha de pago: </b> {{this.dataAux.data.fecha}}
+  </p>
+  <p>
+    <b>Valor: </b> ${{this.dataAux.data.valor_pago | number}}
+  </p>
+  <p>
+    <b>Estado: </b> {{this.dataAux.data.pagado?'Pagado':'No pagado'}}
+  </p>
+  <br>
+  <div class="row">
+    <img [src]="dataAux.data.comprobante" style="    width: 40%;
+    margin: auto;">  
+  </div>
+  
+
+  
+<div class="row" style="margin-top: 10px;">
+  <button class="btn btn-primary" (click)="cancelar(false)" style="margin: auto;">Aceptar</button>
+
+</div>

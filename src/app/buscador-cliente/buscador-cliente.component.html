@@ -1,0 +1,186 @@
+<div *ngIf="!inicioSesion">
+  <div class="header bg-gradient-danger py-7 py-lg-8">
+    <div class="container">
+    </div>
+  </div>
+  <!-- Page content -->
+  <div class="container mt--8 pb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-7">
+        <div class="card bg-info shadow border-0" data-color="blue">
+          <div class="card-body px-lg-5 py-lg-5">
+            <h2 style="color:white" style="text-align:center ;">Buscador de cliente</h2>
+            <form [formGroup]="form" role="form">
+              <div class="form-group mb-3">
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="now-ui-icons users_single-02"
+                        style="color: white !important;"></i></span>
+                  </div>
+                  <input class="form-control" formControlName="celular" numbersOnly placeholder="Número de celular"
+                    type="email">
+                </div>
+              </div>
+              <div id="principal">
+
+              </div>
+
+              <div class="text-center">
+                <button type="button" class="btn btn-primary my-4" [disabled]="form.invalid" (click)="AuthLoginCell()"
+                  *ngIf="!validando()">Buscar</button>
+                <button type="button" class="btn btn-primary my-4" [disabled]="form.invalid" (click)="Cancelar()"
+                  *ngIf="validando()">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="inicioSesion">
+
+  <div class="panel-header panel-header-sm">
+  </div>
+  <div class="main-content">
+    <div class="row">
+      <div class="card">
+        <div class="card-header">
+          <div class="row" style="padding-left: 10px;padding-right:10px">
+            <div class="col">
+              <h4 class="card-title">Reporte de inversiones</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-user">
+          <div class="image">
+            <img src="../assets/img/mh.png" alt="..." style="position: relative;
+            bottom: 18vh;">
+          </div>
+          <div class="card-body">
+            <div class="author">
+              <a>
+                <img class="avatar border-gray" src="../assets/img/user.png" alt="...">
+                <h5 class="title">{{infoUsuario?.nombre}}</h5>
+              </a>
+              <p class="description">
+                C.C {{infoUsuario?.identificacion}}
+              </p>
+              <p class="description">
+                Celular: {{infoUsuario?.celular}}
+              </p>
+              <p class="description">
+                Banco: {{infoUsuario?.banco}}, {{infoUsuario?.tipo_cuenta}}
+              </p>
+              <p class="description">
+                Número de cuenta: {{infoUsuario?.numero_cuenta}}
+              </p>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+
+          <div class="card-body">
+            <div class="row">
+              <mat-tab-group mat-align-tabs="start" style="    width: 100%;">
+                <mat-tab label="Pagos programados">
+                  <table mat-table [dataSource]="pagos" class="mat-elevation-z8 demo-table">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="No">
+                      <th mat-header-cell *matHeaderCellDef>No.</th>
+                      <td mat-cell *matCellDef="let element ;let i=index"> {{i+1}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="fecha">
+                      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                      <td mat-cell *matCellDef="let element">{{element.data.fecha}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="porcentaje">
+                      <th mat-header-cell *matHeaderCellDef>Porcentaje</th>
+                      <td mat-cell *matCellDef="let element">{{element.data.porcentaje}}%</td>
+                    </ng-container>
+                    <ng-container matColumnDef="valor">
+                      <th mat-header-cell *matHeaderCellDef>Valor</th>
+                      <td mat-cell *matCellDef="let element">${{element?.data.valor_pago | number }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="pagado">
+                      <th mat-header-cell *matHeaderCellDef>Pagado</th>
+                      <td mat-cell *matCellDef="let element">
+                        <div *ngIf="element?.data.valor_pago!=0"> {{element?.data.pagado?'Pagado':'No pagado'}}</div>
+                        <div *ngIf="element?.data.valor_pago===0"> No aplica</div>
+
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="comprobante">
+                      <th mat-header-cell *matHeaderCellDef>Comprobante</th>
+                      <td mat-cell *matCellDef="let element">
+                        <button *ngIf="element?.data.pagado && element.data.valor_pago!=0" style="min-width:150px"
+                          class="btn btn-sm btn-primary" style="max-width: 200px;width: 100%;"
+                          (click)="verComprobante(element)">Ver
+                          comprobante</button>
+
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                  </table>
+                </mat-tab>
+                <mat-tab *ngFor="let inversion of arrayInversiones;let i = index" 
+                label="Inversión {{i+1}}"
+                  >
+                  <div class="row" style="padding-left:3%"><b style="font-size: 20px;">Inversión:</b> <div style="padding-top: 7px;margin-left:10px">{{ obtenerIdInversionista(inversion.pagos[0].id_inversion)}}</div></div> 
+                  <div class="row" style="padding-left:3%"><b style="font-size: 20px;">Valor:</b> <div style="padding-top: 7px;margin-left:10px">${{inversion.inversion.valor | number}}</div></div>                   
+                  <table mat-table [dataSource]="inversion.pagos" class="mat-elevation-z8 demo-table">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="No">
+                      <th mat-header-cell *matHeaderCellDef>No.</th>
+                      <td mat-cell *matCellDef="let element ;let i=index"> {{i+1}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="fecha">
+                      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                      <td mat-cell *matCellDef="let element">{{element.fecha}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="porcentaje">
+                      <th mat-header-cell *matHeaderCellDef>Porcentaje</th>
+                      <td mat-cell *matCellDef="let element">{{element.porcentaje}}%</td>
+                    </ng-container>
+                    <ng-container matColumnDef="valor">
+                      <th mat-header-cell *matHeaderCellDef>Valor</th>
+                      <td mat-cell *matCellDef="let element">${{element?.valor_pago | number }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="pagado">
+                      <th mat-header-cell *matHeaderCellDef>Pagado</th>
+                      <td mat-cell *matCellDef="let element">
+                        <div *ngIf="element?.valor_pago!=0"> {{element?.pagado?'Pagado':'No pagado'}}</div>
+                        <div *ngIf="element?.valor_pago===0"> No aplica</div>
+
+                      </td>
+                    </ng-container>
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                  </table>
+                </mat-tab>
+              </mat-tab-group>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

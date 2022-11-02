@@ -1,0 +1,126 @@
+<div class="panel-header">
+  <div class="header text-center">
+    <h2 class="title">Simulador de inversiones</h2>
+    <p class="category">Selecciona tu tipo de inversion y observa tu
+      <a>simulación de pagos.</a>
+    </p>
+  </div>
+</div>
+<div class="main-content" style="    margin-top: -70px;">
+  <div class="row">
+    <div class="col-md-6" style="margin-left:auto;margin-right: auto;">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="formulario" style="padding:5px">
+            <div class="row">
+              <div class="col-md-12 pr-1 pl-1">
+                <div class="form-group">
+                  <label>Tipo *</label>
+                  <select formControlName="tipo" (change)="validarTipo()" type="text" class="form-control">
+                    <option value="" selected disabled>Seleccione una opción</option>
+                    <option (click)="validarTipo()" value="Mensual">Mensual</option>
+                    <option (click)="validarTipo()" value="Compuesta">Compuesta</option>
+                    <option (click)="validarTipo()" value="A Riesgo">A Riesgo</option>
+
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12  pr-1 pl-1">
+                <div class="form-group">
+                  <label>Valor *</label>
+                  <input numbersOnly [(ngModel)]="valor" type="tel" [options]="{ prefix: '', thousands: '.', decimal: ',',align :'left',precision:0 }"  currencyMask   formControlName="valor" class="form-control" placeholder="Ingrese valor">
+
+                </div>
+              </div>
+              <div class="col-md-12  pr-1 pl-1">
+                <div class="form-group">
+                  <label>Porcentaje (%) </label>
+                  <input numbersOnly type="tel" maxlength="3" formControlName="porcentaje" class="form-control"
+                    placeholder="Ingrese Porcentaje">
+                  <span class="text-danger">En caso de querer un porcentaje de utilidad personalizado</span>
+
+                </div>
+              </div>
+
+            </div>
+            <div class="row" >
+              <div class="col-md-6 ml-auto mr-auto text-center">
+                <button class="btn btn-primary" [disabled]="!formulario.valid"  (click)="generarSimulacion()">Generar simulación</button>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+
+    <div class="col-md-12" *ngIf="pagos?.length!=0">
+      <div class="row">
+        <div class="col-md-12">
+        <button class="btn btn-primary" style="margin-left: auto;float: right;"  (click)="exportar()">Generar PDF</button>
+        </div> 
+      </div>
+      <div class="card" id="invoice" #invoice [class.archivoGrande]="exportando"  >
+        <div class="image">
+          <div class="card-body"  style="padding: 5%">
+            <div class="row">
+              <img src="./assets/img/mh_transparente.png" style="width: 30%;max-width: 150px;">
+
+            </div>
+            <h5 style="text-align:center ;">FONDO DE INVERSIONES MH</h5>
+            <div class="row">
+              <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+                <p style="text-align:center ;">Valor:<b> ${{this.val.detalleInversion.valor | number}}</b></p>
+
+              </div>
+             
+              <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+
+              <p style="text-align:center ;">Tipo:<b> {{this.val.detalleInversion.tipo}}</b></p>
+              </div>
+              <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4 col-6">
+
+                <p style="text-align:center ;">Porcentaje:<b> {{pagos[0].porcentaje}}%</b></p>
+                </div>
+
+                
+                
+            </div>
+            <h5 style="text-align:center ;">Plan de pagos</h5>
+
+            <table class="table">
+              <thead>
+                <tr >
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold;"><b>No.</b></th>
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold;"><b>Fecha de pago</b></th>
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold"><b>Porcentaje</b></th>
+                  <th scope="col" style="font-size: 0.9em !important;font-weight: bold"><b>Valor de pago</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pago of pagos;let i=index">
+                  <th >{{i+1}}</th>
+                  <td>{{pago?.fecha}}</td>
+                  <td>{{pago.porcentaje}}%</td>
+                  <td>${{pago.valor_pago | number}}</td>
+                </tr>
+                
+              </tbody>
+            </table>
+            
+           
+          </div>
+          <div class="card-footer" style="margin-top: 80%;">
+           
+          </div>
+        </div>
+       
+       
+      </div>
+     
+    </div>
+   
+  </div>
+</div>

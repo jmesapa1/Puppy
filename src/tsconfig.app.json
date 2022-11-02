@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noUnusedLocals": false,
+    "outDir": "../out-tsc/app",
+    "module": "esnext",
+    "baseUrl": "",
+    "types": [],
+    "target": "es5",
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}

@@ -1,0 +1,19 @@
+.card{
+    background: url(../../assets/img/fondo_modal.png) !important;
+    background-repeat: no-repeat, no-repeat;
+background-position: right, left; 
+background-image:  url("https://mdn.mozillademos.org/files/11991/startransparent.gif"),
+                     url("https://mdn.mozillademos.org/files/7693/catfront.png");
+  background-color: transparent;
+}
+
+.image{
+    background:
+    url(../../assets/img/fondo_modal.png)  bottom center no-repeat,
+    url(../../assets/img/fondo_modal.png)  repeat !important;
+    height: auto;
+}
+
+.archivoGrande{
+    min-width: 1192px !important;
+}

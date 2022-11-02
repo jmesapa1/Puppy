@@ -1,0 +1,11 @@
+
+.image{
+    background:
+    url(../../assets/img/fondo_modal.png)  bottom center no-repeat,
+    url(../../assets/img/fondo_modal.png)  repeat !important;
+    height: auto;
+}
+
+.archivoGrande{
+    min-width: 1192px !important;
+}

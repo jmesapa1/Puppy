@@ -1,0 +1,161 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="card">
+ 
+      <div class="card-header">
+        <div class="row" style="padding-left: 10px;padding-right:10px">
+          <div>
+            <h4 style="margin-top: 0px;
+            margin-bottom: 0px;">{{data.opcion==='editar'?"Detalle de inversion":"Crear inversión para"}},  <a class="description">
+              {{nombre}}, C.C {{identificacion}} <button (click)="enviarMensaje()" style="    margin-top: 0px;"
+                class="btn btn-neutral btn-icon btn-round btn-lg">
+                <i class="fab fa-whatsapp" style="    font-size: 35px;  "></i>
+              </button>
+
+            </a></h4>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Detalle de inversión</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formulario">
+
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-12 pr-1">
+                <div class="form-group">
+                  <label>Tipo *</label>
+                  <select formControlName="tipo" [disabled]="data.opcion==='editar' && this.data.inversion.data.estado==='activo'" (change)="validarTipo()" type="text" class="form-control">
+                    <option value="" selected disabled>Seleccione una opción</option>
+                    <option  (click)="validarTipo()" value="Mensual">Mensual</option>
+                    <option  (click)="validarTipo()" value="Compuesta">Compuesta</option>
+                    <option  (click)="validarTipo()" value="A Riesgo">A Riesgo</option>
+
+                  </select>
+                </div>
+              </div>
+             
+              <div class="col-md-6 col-lg-6 col-sm-12  pr-1">
+                <div class="form-group">
+                  <label>Fecha de creación </label>
+                  <input readonly (click)="picker.open()" formControlName="fecha" [matDatepicker]="picker" class="form-control"
+                    placeholder="Seleccione una fecha"> 
+                    <mat-datepicker #picker></mat-datepicker>
+                 
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-12  pr-1">
+                <div class="form-group">
+                  <label>Valor *</label>
+                  <input numbersOnly [(ngModel)]="valor" style="text-align: left !important;" type="tel" [options]="{ prefix: '', thousands: '.', decimal: ',',align :'left',precision:0 }"  currencyMask   formControlName="valor" class="form-control"
+                    placeholder="Ingrese Identificación">
+                  
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-12  pr-1">
+                <div class="form-group">
+                  <label>Porcentaje (%) </label>
+                  <input numbersOnly  type="tel" maxlength="5" formControlName="porcentaje" class="form-control"
+                    placeholder="Ingrese Porcentaje">
+                    <span class="text-danger">En caso de querer un porcentaje de utilidad personalizado</span>
+                  
+                </div>
+              </div>
+
+            </div>
+           <div class="row">
+              <div class="col-md-12 pr-1">
+
+              <div class="form-group">
+                <textarea class="form-control"   [(ngModel)]="descripcion" [ngModelOptions]="{standalone: true}" 
+                  placeholder="Ingrese descripción"></textarea>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 pr-1">
+                <div class="form-group">
+                  <label>Comprobante de pago</label>
+                </div>
+                
+                <div *ngIf="uploader.queue.length===0 && !this.archivoCargado" ng2FileDrop
+                  [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (onFileDrop)="fileDrop($event)"
+                  (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well my-drop-zone"
+                  style="height: 20vh;margin: auto;">
+                  <div>
+                    <div style="  margin: 0;
+          position: absolute;
+          top: 56%; 
+          left: 50%;
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);">
+                      <button (click)="fileInput.click()" class="btn btn-sm btn-primary">Cargar
+                        archivo</button>
+                      <span
+                        style="visibility: hidden; position: absolute; overflow: hidden; width: 0px; height:0px;border:none;margin:0; padding:0">
+                        <input type="file"  (change)="onFileChanged($event)" (onFileSelected)="file($event,fileInput)" [(ngModel)]="val" #fileInput
+                          ng2FileSelect [uploader]="uploader" single />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <table class="table"
+                  *ngIf="uploader.queue.length!=0 && this.archivoCargado && this.data.opcion === 'crear'">
+                  <thead>
+                    <tr>
+                      <th width="50%">Nombre</th>
+                      <th>Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of uploader.queue;">
+                      <td><strong>{{ item?.file?.name }}</strong></td>
+
+
+                      <td nowrap>
+
+                        <button type="button" class="btn btn-danger btn-xs" (click)="item.remove();eliminar()">
+                          <span class="glyphicon glyphicon-trash"></span> Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div *ngIf=" this.archivoCargado">
+                  <div class="row">
+                    <img [src]="formulario.controls.comprobante.value" style="margin: auto;width: 40%;">
+                  </div>
+                  <div class="row">
+                    <button type="button" class="btn btn-danger btn-xs" style="margin: auto;" (click)="eliminar(0)">
+                      <span class="glyphicon glyphicon-trash"></span> Eliminar imagen
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-primary" style="margin-left: auto;float: right;" *ngIf="data.opcion==='crear'"
+                  [disabled]="formulario.invalid" (click)="crearInversion()">Crear inversión</button>
+                <button class="btn btn-primary" style="margin-left: auto;float: right;" *ngIf="data.opcion==='editar'"
+                  [disabled]="formulario.invalid" (click)="editarUsuario()">Editar inversión</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
